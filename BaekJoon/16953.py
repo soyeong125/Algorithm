@@ -1,4 +1,3 @@
-
 import sys
 sys.stdin=open("input.txt","rt")
 
@@ -16,5 +15,5 @@ if __name__ == "__main__":
     a,b = map(int,input().split())
     DFS(0,a,b)
     print(-1)
-
+    
 
