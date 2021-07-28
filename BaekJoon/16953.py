@@ -1,19 +1,23 @@
 import sys
 sys.stdin=open("input.txt","rt")
 
-def DFS(L,val,goal):
-    if val == goal:
-        print(L+1)
-        sys.exit()
-    if val > goal:
-        return
-    DFS(L+1,val*2,goal)
-    DFS(L+1,val*10+1,goal)
-
-
-if __name__ == "__main__":
-    a,b = map(int,input().split())
-    DFS(0,a,b)
-    print(-1)
+def solution(n, lost, reserve):
+    ch_lost=[1]*len(lost)
+    ch_reserve=[0]*(len(reserve))
     
+    for i in range(len(lost)):
+        for j in range(len(reserve)):
+            if lost[i]==reserve[j] and ch_reserve[j]==0:
+                ch_reserve[j]=1
+                ch_lost[i]=0
+                break
 
+
+    for i in range(len(lost)):
+        if ch_lost[i]==1:
+             for j in range(len(reserve)):
+                    if (reserve[j]==lost[i]-1 or reserve[j]==lost[i]+1) and ch_reserve[j]==0 :
+                            ch_lost[i]=0
+                            ch_reserve[j]=1
+
+    return n - sum(ch_lost)
