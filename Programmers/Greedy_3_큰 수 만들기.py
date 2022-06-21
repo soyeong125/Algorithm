@@ -7,7 +7,7 @@ def solution(number, k):
         else:
             if cur > stack[-1] and k:
                 while stack:
-                    if cur < stack[-1] or not k :
+                    if cur <= stack[-1] or not k :
                         break
                     stack.pop()
                     k-=1
@@ -18,3 +18,6 @@ def solution(number, k):
         k-=1
                        
     return ''.join(str(i) for i in stack)
+
+if __name__ =='__main__':
+    print(solution("01010", 3), "11") #현재 정수랑 stack[-1]같은건 pop하지 않고 냅두기
