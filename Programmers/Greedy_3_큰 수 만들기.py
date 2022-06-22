@@ -20,4 +20,4 @@ def solution(number, k):
     return ''.join(str(i) for i in stack)
 
 if __name__ =='__main__':
-    print(solution("01010", 3), "11") #ÇöÀç Á¤¼ö¶û stack[-1]°°Àº°Ç popÇÏÁö ¾Ê°í ³ÀµÎ±â
+    print(solution("01010", 3), "11") #ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ stack[-1]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ popï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½Î±
