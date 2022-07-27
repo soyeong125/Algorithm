@@ -1,9 +1,5 @@
 import math
 
-#(1) brown + yellow = ����
-#(2) yellow�� ��Ÿ�� �� �ִ� �簢�� üũ
-#(2-1) ���μ��� ���� ���ϱ� > ��� ����(���üũ)
-#(3) ����*���� +4 �� brown�� ���̸� ���   
 def solution(brown, yellow):
     answer = []
     xx , yy = 0 , 0
