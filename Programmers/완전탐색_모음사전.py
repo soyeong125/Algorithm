@@ -16,13 +16,12 @@ def solution(word):
     #         return i+1
     return word_list.index(word) + 1
 
-if __name__ == "__main__" :
-        l = ['A','E','I','O','U']
-         #print(solution("AAAAE"))
+#훨씬 빠르다
+from itertools import product 
+def solution(word):
         word_list = []
         for i in range(5):
             for j in product('AEIOU',repeat = i+1):
                 word_list.append(''.join(j))
         word_list.sort()
-        print(word_list.index('AAAAE') + 1)
-            
+        return word_list.index(word) + 1
