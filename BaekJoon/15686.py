@@ -1,34 +1,33 @@
 import sys
-
+import math
+from itertools import combinations
 sys.stdin = open("input.txt", 'r')
-
-
-def dfs(depth,total,pluse,minus,multiply,divide):
-    global max_answer
-    global min_answer
-    if depth == n:
-        max_answer = max(max_answer,total)
-        min_answer = min(min_answer,total)
-        return
-    if pluse:
-        dfs(depth+1,total+num[depth],pluse-1,minus,multiply,divide)
-    if minus:
-        dfs(depth+1,total-num[depth],pluse,minus-1,multiply,divide)
-    if multiply:
-        dfs(depth+1,total*num[depth],pluse,minus,multiply-1,divide)
-    if divide:
-        dfs(depth+1,int(total/num[depth]),pluse,minus,multiply,divide-1)       
-
-
+input = sys.stdin.readline
 if __name__ == "__main__":
-    n = int(sys.stdin.readline())
-    num = list(map(int,input().split()))  
-    op_list = list(map(int,input().split())) 
-    visited = [0 for i in range(n)]
-    max_answer = -1e9
-    min_answer = 1e9
+    n,m = map(int,input().split())
+    cmap = [list(map(int,input().split())) for i in range(n)]
+    chicken = []
+    result = 10000000
+    #치킨집 찾기
+    for i in range(n):
+        for j in range(n):
+            if cmap[i][j]==2:
+                chicken.append([i,j])
+    #폐업안할 치킨집으로 최단거리 탐색
+    for i in combinations(chicken,m):
+        combi_result = 0
+        for x in range(n):
+            for y in range(n):         
+                if cmap[x][y] == 1:
+                    tmp_result = 1e9
+                    for chick in i:
+                        tmp_result = min(tmp_result,abs(chick[0]-x) + abs(chick[1]-y))
+                else:
+                    continue
+                combi_result += tmp_result
+        result = min(result,combi_result)
+    print(result)
 
-    dfs(1,num[0],op_list[0],op_list[1],op_list[2],op_list[3])
 
-    print(max_answer)
-    print(min_answer)
+
+    
