@@ -2,7 +2,7 @@ import sys
 import math
 from collections import deque
 sys.stdin = open("input.txt", 'r')
-input = sys.stdin.readline
+#input = sys.stdin.readline
 if __name__ == "__main__":
     n = int(input())
     house = [list(map(int,input())) for _ in range(n)]
@@ -18,8 +18,7 @@ if __name__ == "__main__":
                 visited[i][j]=1
                 tmp_cnt = 1
                 while q:
-                    x,y = q.popleft()
-                    
+                    x,y = q.popleft()                   
                     for k in range(4):
                         xx = x + dx[k]
                         yy = y + dy[k]
