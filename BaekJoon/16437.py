@@ -1,40 +1,32 @@
-from asyncio.windows_events import NULL
 import sys
 from collections import deque
 sys.stdin = open("input.txt", 'r')
 input = sys.stdin.readline
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(10**8)
 
 if __name__ == "__main__":
     n = int(input())
-    area = [[]] * (n+2)
-    s = deque()
-    result = 0
+    tree = [[] for _ in range(n+1)]
+    node = [[],[0,0]]
 
-    def DFS(cur,cnt,connect):
-        global result
-        if cnt <= 0 :
-            return
-        if cur == 1:
-            result += cnt
-            return
-        if area[connect][0] == 'W': #늑대인 경우         
-            cnt = cnt - area[connect][1]
-            DFS(connect,cnt,area[connect][2])
-        if area[connect][0] == 'S': #양인 경우         
-            DFS(connect,cnt,area[connect][2])            
-    area[1] = ['S',0,1]
-    for i in range(n-1):
-        x = list(input().split())
-        if x[0] == 'S':
-            s.append([i+2,int(x[1]),int(x[2])])
-            area[i+2] = ['S',int(x[1]),int(x[2])]
-        if x[0] == 'W':
-            area[i+2] = ['W',int(x[1]),int(x[2])]
-    while s:
-        cur,cnt,connect = s.pop()
-        DFS(cur,cnt,connect) 
-    print(result)       
-
-
+    for i in range(2,n+1):
+        t,a,p = input().split()
+        a = int(a)
+        p = int(p)
+        tree[p].append(i)
+        node.append([t,a])
+    
+    def dfs(v):
+        result = 0
         
+        for i in tree[v]:
+            result += dfs(i)
+        if node[v][0] == 'W':
+            result -= node[v][1]
+            if result < 0:
+                result = 0
+        else:
+            result += node[v][1]
+        return result
+    print(dfs(1))
+   
