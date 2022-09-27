@@ -25,7 +25,10 @@ if __name__ == "__main__":
     for i in range(n):
         for j in range(n):
             result = max(dfs(i,j),result)
-    print(result)
+    print(dp)
+
+
+
 
 
 

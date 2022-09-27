@@ -30,10 +30,10 @@ if __name__ == "__main__":
                     if area[xx][yy] == 'R' or area[xx][yy] == 'G':
                         visited[xx][yy]=1
                         DFS2(xx,yy,cur)
-                else:
-                    if area[xx][yy] == cur:
-                        visited[xx][yy]=1
-                        DFS2(xx,yy,cur)
+                    else:
+                        if area[xx][yy] == cur:
+                            visited[xx][yy]=1
+                            DFS2(xx,yy,cur)
 
             
 
