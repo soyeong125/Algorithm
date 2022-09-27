@@ -9,24 +9,23 @@ if __name__ == "__main__":
     cardarr.sort()
     inputnum = int(input())
     inputarr = list(map(int,input().split()))
-    answer = [0] * inputnum
+
+    def search(start,end,target):
+        while start <= end:
+            mid = (start+end) //2
+            if cardarr[mid] < target:
+                start = mid +1
+            elif cardarr[mid] > target: 
+                end = mid -1
+            elif cardarr[mid] == target:
+                return 1
+        return 0
 
     for i in range(inputnum):
-        val = inputarr[i]
-        l = 0
-        r = cardnum
-        while l <= r:
-            mid = (l + r) //2
-            if mid < 0 or mid >= cardnum:
-                break
-            if cardarr[mid] < val:
-                l = mid +1
-            elif cardarr[mid] > val: 
-                r = mid -1
-            elif cardarr[mid] == val:
-                answer[i] = 1
-                break
-    for i in answer:
-        print(i,end=' ')
-
+        target = inputarr[i]
+        if search(0,cardnum - 1,target):
+            print(1,end = ' ')
+        else:
+            print(0,end = ' ')
+        
         
