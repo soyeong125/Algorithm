@@ -11,16 +11,23 @@ if __name__ == "__main__":
     for i in range(1,D):
         oven[i] = min(oven[i],oven[i-1])
     
-    cur = 0
     idx = 0
-    for i in range(D-1,0,-1):
-        if oven[i] < banjuk[cur]:
-            continue
-        cur +=1
-        if cur >= N:
-            idx = (i+1)
-            break
-    print(idx)
+    for i in range(N):
+        val = banjuk[i]
+        l = 0
+        r = D-1
+        while l<=r:
+            mid =(l+r)//2
+            if oven[mid] >= val:
+                idx = min(idx,mid)
+                oven[mid] = 0
+                break
+            else:
+                r = mid - 1
+
+    print(idx+2)
+
+
             
 
         
