@@ -17,6 +17,8 @@ if __name__ == "__main__":
 
     def dfs(idx,val):
         global result
+        if not idx == v1 - 1 and result > val:
+            return
         if idx == v2-1:
             result = max(result,val)
             return
