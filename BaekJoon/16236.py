@@ -10,8 +10,8 @@ if __name__ == "__main__":
    n = int(input())
    sea = [list(map(int,input().split())) for _ in range(n)]
    
-   dx = [1,0,-1,0]
-   dy = [0,1,0,-1]
+   dx = [1,-1,0,0]
+   dy = [0,0,1,-1]
 
    #상어 위치 저장 > 변수로 저장하기 (배열 쓰지 말기 무 조 건 간단하게가 포인트)
    sx,sy = 0,0
@@ -38,6 +38,8 @@ if __name__ == "__main__":
         while q:
             x,y,m = q.popleft()
             visited[x][y] = 1   
+            if len(tmp) > 0:
+                break
             for k in range(4):
                 xx = x + dx[k]
                 yy = y + dy[k]
@@ -51,7 +53,7 @@ if __name__ == "__main__":
             break
         else:
             #먹을 수 있는 물고기 정렬 (움직임 > 위 >아래)
-            tmp.sort(key = lambda x:([x[2],x[0],x[1]]))
+            tmp.sort()
             x,y,move2 = tmp[0][0],tmp[0][1],tmp[0][2]
             #움직임 누적
             move += move2
