@@ -1,0 +1,29 @@
+#조합
+#중복을 포함하지 않고 r개 뽑음
+#1 2 랑 2 1 은 같은 것
+def combination(arr,r):
+    for i in range(len(arr)):
+        if r == 1:
+            yield [arr[i]]
+        else:
+            for next in combination(arr[i+1:],r-1):
+                yield [arr[i]] + next
+
+#중복 조합
+#중복을 포함해서 r개 뽑음
+# 1 2 랑 2 1 은 같은 것
+# 1 1 이 뽑힐 수 있음
+def combination2(arr,r):
+    for i in range(len(arr)):
+        if r == 1:
+            yield [arr[i]]
+        else:
+            for next in combination2(arr[i:],r-1):
+                yield [arr[i]] + next
+
+         
+
+if __name__ == "__main__":  
+    arr = [1,2,3,4,5,6,7,8,9]
+    for i in combination2(arr,2):
+        print(i)                

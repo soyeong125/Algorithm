@@ -1,0 +1,18 @@
+#순열
+#중복을 허용하지 않고 r개를 뽑아서 나열
+# 1 2 랑 2 1 이랑 다른거
+
+def permutaion(arr,r):
+    for i in range(len(arr)):
+        if r == 1:
+            yield [arr[i]]
+        else:
+            for next in permutaion(arr[:i]+arr[i+1:],r-1):
+                yield [arr[i]] + next
+
+
+
+if __name__ == "__main__":  
+    arr = [1,2,3,4,5,6,7,8,9]
+    for i in permutaion(arr,2):
+        print(i)
