@@ -6,13 +6,16 @@ input = sys.stdin.readline
 sys.setrecursionlimit(100000)
 
 if __name__ == "__main__":  
-    n, k = map(int,input().split())
-    c = [int(input()) for _ in range(n)]
-    dp = [0 for _ in range(k+1)]
-    dp[0] = 1
+    n = int(input())
+    dp = [0] * (n+1)
 
-    for i in c:
-        for j in range(i,k+1):
-                dp[j] += dp[j-i]
-    print(dp[k])
+    for i in range(2,n+1):
+        dp[i] = dp[i-1] + 1
+        if i % 3 == 0:
+            dp[i] = min(dp[i],dp[i//3]+1)
+        if i % 2 == 0:
+            dp[i] = min(dp[i],dp[i//2]+1)
+    print(dp[n])
 
+
+#뭘 메모이제이션 해야하는지 체크하기
