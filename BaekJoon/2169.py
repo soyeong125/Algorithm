@@ -6,24 +6,32 @@ sys.setrecursionlimit(10**6)
 
 if __name__ == "__main__":  
     n,m = map(int,input().split())
-    mm = [list(map(int,input().split())) for _ in range(n)]
-    dp = [[0]*m for _ in range(n)]
-    dx = [1,0,0]
-    dy = [0,1,-1]
-    result = 0
+    dp = [list(map(int,input().split())) for _ in range(n)]
 
-    def dfs(x,y):
-        if dp[x][y] : return dp[x][y]
-        
-        for k in range(3):
-            xx = x + dx[k]
-            yy = y + dy[k]
-            if 0<=xx<n and 0<=yy<m:
-                dp[x][y] = max(dp[x][y],dfs(xx,yy)+mm[x][y])
-        return dp[x][y]
-    for i in range(n):
-        for j in range(m):
-            result = max(dfs(i,j),result)
-    print(result)
-        
+    for i in range(1,m):
+        dp[0][i] += dp[0][i-1]
     
+    for i in range(1,n):
+        left = dp[i][:]
+        right = dp[i][:]
+
+        for j in range(m):
+            if j == 0:
+                left[j] += dp[i-1][j]
+            else:
+                left[j] += max(dp[i-1][j],left[j-1])
+        for j in range(m-1,-1,-1):
+            if j == m-1:
+                right[j] += dp[i-1][j]
+            else:
+                right[j] += max(dp[i-1][j],right[j+1])
+        for j in range(m):
+            dp[i][j] = max(left[j],right[j])
+    print(dp[n-1][m-1])
+    
+
+
+
+    
+    
+        
