@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     for i in range(1,m):
         dp[0][i] += dp[0][i-1]
-    
+
     for i in range(1,n):
         left = dp[i][:]
         right = dp[i][:]
@@ -28,6 +28,7 @@ if __name__ == "__main__":
         for j in range(m):
             dp[i][j] = max(left[j],right[j])
     print(dp[n-1][m-1])
+
     
 
 

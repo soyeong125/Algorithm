@@ -19,23 +19,6 @@ if __name__ =="__main__":
 
 
 
-# if __name__ == "__main__":
-#     array = input().rstrip()
-#     result = [''] * len(array)
-
-#     def func(arr,start):
-#         if not arr:
-#             return
-#         _min = min(arr)
-#         idx = arr.index(_min)
-#         result[start+idx] = _min
-#         print("".join(result))
-#         func(arr[idx+1:],start+idx+1)
-#         func(arr[:idx],start)
-
-#     func(array,0)
-        
-    
 
 
 

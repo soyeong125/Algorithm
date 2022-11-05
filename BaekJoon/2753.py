@@ -4,12 +4,13 @@ sys.stdin = open("input.txt", 'r')
 input = sys.stdin.readline
 
 if __name__ == "__main__":  
-    n = int(input())
+    dic = {}
+    dic[1] = 1
+    dic[2] = 1
+    dic[3] = [4,5]
 
-    if n % 4 == 0:
-        if not n%100 == 0 or n%400 == 0:
-            print(1)
-        else:
-            print(0)
+    if 4 in dic[3]:
+        print("yes")
     else:
-        print(0)
+        print("no")
+    

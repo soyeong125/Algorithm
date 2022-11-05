@@ -8,23 +8,27 @@ if __name__ == "__main__":
     n,k = map(int,input().split())
     res = 0
     q = deque()
-    visited = [[-1,0] for _ in range(100001)] #도달하는데 걸리는 시간, 경우의 수
+    visited = [-1 for _ in range(100001)] 
     
-    def bfs(val):
-        q.append(val)
-        visited[val][0] = 0
-        visited[val][1] = 1
+    q = deque()
+    q.append([n,0])
+    visited[n] = 1
 
-        while q:
-            v = q.popleft()
-            for i in [v-1,v+1,v*2]:
-                if 0 <= i <= 100000:
-                    if visited[i][0] == -1: #한번도 방문 안했으면
-                        visited[i][0] = visited[v][0] + 1
-                        visited[i][1] = visited[v][1]
-                        q.append(i)
-                    elif visited[i][0] == visited[v][0] + 1:
-                        visited[i][1] += visited[v][1]
-    bfs(n)
-    print(visited[k][0])
-    print(visited[k][1])
+    while q:
+        x,cnt = q.popleft()
+        if x == k:
+            res = cnt
+            break
+        for i in [x-1,x+1,x*2]:
+            if 0 <= i < 100001:
+                if i == x*2:
+                    if visited[i] == -1:
+                        visited[i] = cnt
+                        q.append([i,cnt])
+                    else:
+                        visited[i] = min(visited[i],cnt)
+
+
+
+
+    print(res)           

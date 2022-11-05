@@ -5,27 +5,31 @@ input = sys.stdin.readline
 sys.setrecursionlimit(10**8)
 
 if __name__ == "__main__":
-    r,c = map(int,input().split())
-    area = [list(input()) for _ in range(r)]
-    dx = [1,-1,0,0]
-    dy = [0,0,1,-1]
-    result = 0
+    n = int(input())
+    tree = [[] for _ in range(n+1)]
+    node = [[],[0,0]]
 
-    def bfs():
-        global result
-        q = set([(0,0,area[0][0])])
-        while q:
-            x,y,z = q.pop()
-            result = max(result,len(z))
-            for k in range(4):
-                xx = x + dx[k]
-                yy = y + dy[k]
-                if 0<=xx<r and 0<=yy<c and area[xx][yy] not in z:
-                    q.add((xx,yy,z+area[xx][yy]))
-                    
-   
-    bfs()
-    print(result)
+    for i in range(2,n+1):
+        t,a,p = input().split()
+        a = int(a)
+        p = int(p)
+        tree[p].append(i)
+        node.append([t,a])
+    
+    def dfs(v):
+        result = 0
+        
+        for i in tree[v]:
+            result += dfs(i)
+        if node[v][0] == 'W':
+            result -= node[v][1]
+            if result < 0:
+                result = 0
+        else:
+            result += node[v][1]
+        return result
+    print(tree)
+    print(node)
 
 
   
