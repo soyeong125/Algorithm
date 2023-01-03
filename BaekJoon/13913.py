@@ -1,30 +1,33 @@
 import sys
-from collections import deque
 sys.stdin = open("input.txt", 'r')
+from collections import deque
 input = sys.stdin.readline
 if __name__ == "__main__":
     n, k = map(int, input().split())
+    visited = [-1] * 100001
     idx = [0] * 100001
+    visited[n] = 0
     q = deque()
-    q.append([n,0])
+    q.append(n)
 
-    def check(k,cnt):
+    def check(k):
         res = [k]
         i = k
-        for _ in range(cnt):
+        for _ in range(visited[k]):
             res .append(idx[i])
             i = idx[i]
         print(' '.join(map(str,res[::-1])))
 
 
     while q:
-        x,cnt = q.popleft()
+        x = q.popleft()
         if x == k:
-            print(cnt)
-            check(x,cnt)
+            print(visited[k])
+            check(x)
             break
         for i in [x-1,x+1,x*2]:
             if 0 <= i < 100001:
-                if idx[i] == 0:
-                    q.append([i,cnt+1])
+                if visited[i] == -1:
+                    visited[i] = visited[x] + 1
+                    q.append(i)
                     idx[i] = x
