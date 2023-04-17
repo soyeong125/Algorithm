@@ -1,0 +1,52 @@
+import sys
+
+if __name__ == "__main__":
+    # def solution(a, b, g, s, w, t):
+    #     answer = -1
+    #     L = 0
+    #     R = 1 * 10**9 * 10**5 * 2 * 2 # 최소의 무게 1을 10**9번 옮기는 경우 이때 1번 옮기는데 시간이 10**5 시간 걸리고 왕복이고 금/은 둘다 해야한다.
+    #     town = len(g)
+    #     while L <= R:
+    #         T = (L+R)//2
+    #         TOTAL = 0
+    #         G = 0
+    #         S = 0
+    #         for i in range(town):
+    #             weight = w[i] + ((T-t[i]) // (t[i]*2)) * w[i]
+    #             G += min(weight,g[i])
+    #             S += min(weight,s[i])
+    #             TOTAL += min(weight,g[i]+s[i])
+    #         if G >= a and S >= b and TOTAL >= a+b:
+    #             R = T -1
+    #         else:
+    #             L = T + 1
+    #
+    #     return L
+
+    def solution(a, b, g, s, w, t):
+        answer = -1
+        L = 0
+        R = 1 * 10**9 * 10**5 * 2 * 2 # 최소의 무게 1을 10**9번 옮기는 경우 이때 1번 옮기는데 시간이 10**5 시간 걸리고 왕복이고 금/은 둘다 해야한다.
+        town = len(g) # 모든 마을을 순회하면서 옮길 수 있는 금과 은의 무게를 체크해야함
+        while L <= R:
+            T = (L+R)//2 # 특정 시간 내에 광물을 이동할 수 있을지가 우리의 target값
+            TOTAL = 0
+            G = 0
+            S = 0
+            for i in range(town):
+                cnt = T // (t[i]*2) # 왕복으로 움직일 수 있는 횟수
+                if T % (t[i]*2) >= t[i]: # 편도로 움직일 수 있는 횟수, 왕복으로 움직일 수 있는 횟수를 제외하고도 편도로 갈 수 있을 여유가 있으면 편도로 간다.
+                    cnt +=1
+                # cnt = 1 + (T-t[i] // t[i]*2 ) # 무조건 편도로 한번 가고 + 전체 시간에서 편도로 가는 시간을 제외하고 왕복으로 갈 수 있는 시간 체크
+                weight = w[i] * cnt # 한 도시에서 가지고 갈 수 있는 무게는 "트럭 최대 용량 * 이동 횟수"
+                G += min(weight,g[i]) # 한 도시에서 가지고 갈 수 있는 금의 최대 무게는 "한 도시에서 가져갈 수 있는 최대값" 괴 " 금의 최댓값중 작은 값
+                                      # 금의 최댓값보다 더 큰값을 가져갈 수 없음
+                S += min(weight,s[i]) # 은도 동일 근데 모든 도시를 돌아야하니까 누적해줌
+                TOTAL += min(weight,g[i]+s[i]) # 금과 은을 함께 가져가는 경우도 체크 weight만 체크하면 안되는 이유는 한 도시에서 가져갈 수 있는 최댓값보다
+                                               # 금 + 은 값이 작으면 금 + 은 값이 가져갈 수 있는 최댓값
+            if G >= a and S >= b and TOTAL >= a+b: # 모든 도시를 돌았을 때 조건을 충족하면
+                R = T -1  #시간을 조금 줄여서 할 수 있는지 확인
+            else:
+                L = T + 1
+
+        return L #조건을 만족하는 최솟값 L = R이 되는 값
