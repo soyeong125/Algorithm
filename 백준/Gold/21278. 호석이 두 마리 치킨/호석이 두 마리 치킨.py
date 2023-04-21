@@ -1,38 +1,56 @@
 import sys
 from itertools import combinations
-from collections import deque
+
 input = sys.stdin.readline
+
 if __name__ == "__main__":
+
     n,m = map(int,input().split())
-    tree = [[] for _ in range(n+1)]
+    INF = int(1e9)
+    res = [[INF] * (n + 1) for _ in range(n + 1)]
+
     for _ in range(m):
         a,b = map(int,input().split())
-        tree[a].append(b)
-        tree[b].append(a)
+        res[a][b] = 1
+        res[b][a] = 1
 
+    for i in range(1,n+1): #자기 자신은 0으로 초기화
+        for j in range(1,n+1):
+            if i == j:
+                res[i][j] = 0
+
+    #1. 모든 정점에서 모든 정점으로 가는 최소값 구하기 (플로이드 와샬)
+    for k in range(1,n+1): # 경유 노드
+        for i in range(1,n+1): # 출발 노드
+            for j in range(1,n+1): # 도착 노드
+                res[i][j] = min(res[i][j], res[i][k] + res[k][j]) #곧장 가는 값과 경유해서 가는 값 중 최소값으로 초기화
+
+    #2. 노드 2개 정해서 가장 최소값을 찾기
     cases = list(combinations([i for i in range(1,n+1)],2))
-
-    res = [10**6,0,0] #결과, node1, node2
-
+    ans_sum = INF
+    ans_node = [0,0]
     for case in cases:
         node1,node2 = case
-        visited = [False for _ in range(n+1)]
-        visited[node1] = True
-        visited[node2] = True
-        q = deque()
-        q.append([node1,0])
-        q.append([node2,0])
-        tmp_res = 0
-        while q:
-            cur_node, cnt = q.popleft()
-            for next_node in tree[cur_node]:
-                if not visited[next_node]:
-                    visited[next_node] = True
-                    tmp_res += cnt + 1
-                    q.append([next_node,cnt+1])
+        tmp_sum = 0
+        for i in range(1,n+1):
+            if i == node1 or i == node2:
+                continue
+            if res[node1][i] == 0 or res[node2][i] == 0:
+                continue
+            tmp_sum += min(res[node1][i], res[node2][i])
 
-        if tmp_res * 2 < res[0]:
-            res[0] = tmp_res * 2
-            res[1] = node1
-            res[2] = node2
-    print(f"{res[1]} {res[2]} {res[0]}")
+        if ans_sum > tmp_sum * 2:
+            ans_sum = tmp_sum * 2
+            ans_node[0] = node1
+            ans_node[1] = node2
+
+    print(ans_node[0],ans_node[1],ans_sum)
+
+
+
+
+
+
+
+
+
