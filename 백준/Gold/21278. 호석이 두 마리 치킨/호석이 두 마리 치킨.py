@@ -35,8 +35,6 @@ if __name__ == "__main__":
         for i in range(1,n+1):
             if i == node1 or i == node2:
                 continue
-            if res[node1][i] == 0 or res[node2][i] == 0:
-                continue
             tmp_sum += min(res[node1][i], res[node2][i])
 
         if ans_sum > tmp_sum * 2:
