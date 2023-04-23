@@ -1,28 +1,26 @@
-def dfs(tree,visited,connected,v):
-    visited[v] = True
-    cnt = 1
-
-    for next_n in tree[v]:
-        if not visited[next_n] and connected[v][next_n]: #방문하지 않았고 연결되어있다면
-            cnt += dfs(tree,visited,connected,next_n)
-
-    return cnt
+def dfs(node, visited, tree, child):
+    visited[node] = True
+    
+    for next in tree[node]:
+        if not visited[next]:
+            child[node] += dfs(next, visited, tree, child) + child[next]
+        
+    return 1
 
 def solution(n, wires):
-    answer = float('inf')
-    tree = [[] for _ in range(n + 1)]
-    for n1,n2 in wires:
-        tree[n1].append(n2)
-        tree[n2].append(n1)
-    connected = [[True] * (n+1) for _ in range(n+1)]
-
-    for n1,n2 in wires:
-        visited = [False for _ in range(n + 1)]  # 방문한 노드 체크 할 리스트
-        visited[n1] = True
-        visited[n2] = True
-        ans = dfs(tree,visited,connected,n1)
-        connected[n1][n2] = True
-
-        answer = min(answer, abs(ans - (n-ans)))
-
-    return answer
+    tree = [[] for _ in range(n+1)]
+    
+    for v1, v2 in wires:
+        tree[v1].append(v2)
+        tree[v2].append(v1)
+        
+    visited = [False] * (n+1)
+    child = [0] * (n+1) #각자의 자식 개수를 구하기 위한 리스트
+    
+    dfs(1, visited, tree, child)
+    result = n
+    
+    for c in child:
+        result = min(result, abs(n-2*(c+1)))
+    
+    return result
