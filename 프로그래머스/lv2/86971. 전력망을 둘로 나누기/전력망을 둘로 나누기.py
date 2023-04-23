@@ -1,42 +1,28 @@
-from collections import deque
-import math
+def dfs(tree,visited,connected,v):
+    visited[v] = True
+    cnt = 1
+
+    for next_n in tree[v]:
+        if not visited[next_n] and connected[v][next_n]: #방문하지 않았고 연결되어있다면
+            cnt += dfs(tree,visited,connected,next_n)
+
+    return cnt
 
 def solution(n, wires):
-    answer = 101
-    wires.sort()
-    for i in range(n-1):
-        tree = [[] for _ in range(n + 1)]
-        for j in range(n-1): # 트리 만들기
-            if i == j : # 간선 하나 자르기
-                continue
-            node1 = wires[j][0]
-            node2 = wires[j][1]
-            tree[node1].append(node2)
-            tree[node2].append(node1)
+    answer = float('inf')
+    tree = [[] for _ in range(n + 1)]
+    for n1,n2 in wires:
+        tree[n1].append(n2)
+        tree[n2].append(n1)
+    connected = [[True] * (n+1) for _ in range(n+1)]
 
-        visited = [False for _ in range(n+1)] # 방문한 노드 체크 할 리스트
-        res = [0 for _ in range(n+1)] # 방문한 노드 root 노드 체크
+    for n1,n2 in wires:
+        visited = [False for _ in range(n + 1)]  # 방문한 노드 체크 할 리스트
+        visited[n1] = True
+        visited[n2] = True
+        ans = dfs(tree,visited,connected,n1)
+        connected[n1][n2] = True
 
-        q = deque()
-        node1 = wires[i][0]
-        node2 = wires[i][1]
-        q.append(node1) #자른 간선을 기준으로 체크
-        q.append(node2) #자른 간선을 기준으로 체크
-        visited[node1] = True # 시작 노드 방문 체크
-        visited[node2] = True # 시작 노드 방문 체크
-        res[node1] = node1
-        res[node2] = node2
-
-        while q:
-            cur_node = q.popleft()
-            for next_node in tree[cur_node]:
-                if not visited[next_node]:
-                    visited[next_node] = True
-                    res[next_node] = res[cur_node]
-                    q.append(next_node)
-                    
-        ans1 = res.count(node1)
-        ans2 = res.count(node2)
-        answer = min(answer,abs(ans1-ans2))
+        answer = min(answer, abs(ans - (n-ans)))
 
     return answer
