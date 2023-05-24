@@ -27,18 +27,18 @@ if __name__ == "__main__":
                         total = cnt
             return total
 
+        dx = [1,0]
+        dy = [0,1]
         for i in range(n):
             for j in range(n):
-                if i+1 < n : #밑에 체크
-                    bomboni[i][j], bomboni[i+1][j] = bomboni[i+1][j], bomboni[i][j]
-                    tmp = check(bomboni)
-                    if tmp > result:
-                        result =tmp
-                    bomboni[i][j], bomboni[i + 1][j] = bomboni[i + 1][j], bomboni[i][j]
-                if j+1 < n:
-                    bomboni[i][j], bomboni[i][j+1] = bomboni[i][j+1], bomboni[i][j]
-                    tmp = check(bomboni)
-                    if tmp > result:
-                        result = tmp
-                    bomboni[i][j], bomboni[i][j+1] = bomboni[i][j+1], bomboni[i][j]
+                for k in range(2):
+                    x = i + dx[k]
+                    y = j + dy[k]
+                    if 0<=x<n and 0<=y<n and bomboni[i][j] != bomboni[x][y]:
+                        bomboni[i][j], bomboni[x][y] = bomboni[x][y], bomboni[i][j]
+                        tmp = check(bomboni)
+                        if tmp > result:
+                            result = tmp
+                        bomboni[i][j], bomboni[x][y] = bomboni[x][y], bomboni[i][j]
+
         print(result)
