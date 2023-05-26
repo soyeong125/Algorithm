@@ -11,15 +11,14 @@ if __name__ == "__main__":
     def check():
         tmp = ''
         mo_list = ['a', 'e', 'o', 'i', 'u']
+        mo,ja = 0,0
         for i in range(c):
             if visited[i]:
-                tmp+=arr[i]
-        mo,ja = 0,0
-        for i in tmp:
-            if i in mo_list:
-                mo+=1
-            else:
-                ja+=1
+                tmp += arr[i]
+                if arr[i] in mo_list:
+                    mo += 1
+                else:
+                    ja += 1
         if mo>=1 and ja>=2:
             res.append(''.join(tmp))
         return
