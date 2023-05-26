@@ -21,8 +21,7 @@ if __name__ == "__main__":
             else:
                 ja+=1
         if mo>=1 and ja>=2:
-            if ''.join(tmp) not in res:
-                res.append(''.join(tmp))
+            res.append(''.join(tmp))
         return
 
 
@@ -37,8 +36,7 @@ if __name__ == "__main__":
                 dfs(level+1,i+1)
                 visited[i] = 0
 
-    for i in range(c):
-        dfs(0,i)
+    dfs(0,0)
 
     for word in res:
         print(word)
