@@ -3,8 +3,7 @@ input = sys.stdin.readline
 
 if __name__ == "__main__":
     l,c = map(int,input().split())
-    arr = input().split()
-    arr.sort(key = lambda x: ord(x[0]))
+    arr = sorted(input().split())
     visited = [0] * c
     res = []
 
