@@ -10,6 +10,8 @@ if __name__ == "__main__":
     for i in range(n):
         num,strike,ball = map(int,input().split())
         for p in range(len(permulist)):
+            if not reslist[p]:
+                continue
             s,b = 0,0
             for i in range(3):
                 if str(num)[i] == str(permulist[p][i]):
