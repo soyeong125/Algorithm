@@ -18,14 +18,14 @@ if __name__ == "__main__":
             for j in range(m):
                 if arr[i][j] == 0:
                     cnt +=1
-                    q.append([i,j,cnt])
+                    q.append([i,j])
                     while q:
-                        x,y,cnt = q.popleft()
+                        x,y = q.popleft()
                         for k in range(4):
                             xx = x + dx[k]
                             yy = y + dy[k]
                             if 0<=xx<n and 0<=yy<m and arr[xx][yy] == 0:
-                                arr[xx][yy] = cnt
-                                q.append([xx,yy,cnt])
+                                arr[xx][yy] = -1
+                                q.append([xx,yy])
                     
         print(cnt)
