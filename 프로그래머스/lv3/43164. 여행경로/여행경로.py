@@ -14,8 +14,7 @@ def solution(tickets):
             if l == len(tickets):
                 answer.append(tmp)
                 return
-            if l >= len(tickets):
-                return
+
 
             for i in range(len(dic[start])):
                 if not visited[start][i]:
