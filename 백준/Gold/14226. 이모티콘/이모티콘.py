@@ -7,10 +7,11 @@ if __name__ == "__main__":
 
     q = deque()
     q.append([1,0])
-
+    res = -1
     while q:
         view,clip = q.popleft()
         if view == n:
+            res = dp[view][clip]
             break
 
         if view > 0 and dp[view][view] == -1:
@@ -23,8 +24,4 @@ if __name__ == "__main__":
             q.append([view-1,clip])
             dp[view-1][clip] = dp[view][clip] + 1
 
-    res = 10**8
-    for i in dp[n]:
-        if i >= 0 and i < res:
-            res = i
     print(res)
