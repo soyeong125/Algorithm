@@ -1,30 +1,30 @@
 import sys
 from collections import deque
-input = sys.stdin.readline
-
 if __name__ == "__main__":
     n = int(input())
     dp = [[-1] * (n+1) for _ in range(n+1)]
     dp[1][0] = 0
+
     q = deque()
     q.append([1,0])
 
     while q:
-        s,c = q.popleft()
-        if s > 0 and dp[s][s] == -1:
-            q.append([s,s])
-            dp[s][s] = dp[s][c] + 1
-        if s+c <= n and dp[s+c][c] == -1:
-            q.append([s+c,c])
-            dp[s+c][c] = dp[s][c] + 1
-        if s-1 >= 0 and dp[s-1][c] == -1:
-            q.append([s-1,c])
-            dp[s-1][c] = dp[s][c] + 1
+        view,clip = q.popleft()
+        if view == n:
+            break
 
-    
-    res = 1000000
+        if view > 0 and dp[view][view] == -1:
+            q.append([view,view])
+            dp[view][view] = dp[view][clip] + 1
+        if view + clip <= n and dp[view + clip][clip] == -1:
+            q.append([view+clip,clip])
+            dp[view+clip][clip] = dp[view][clip] + 1
+        if view > 0 and dp[view -1][clip] == -1:
+            q.append([view-1,clip])
+            dp[view-1][clip] = dp[view][clip] + 1
+
+    res = 10**8
     for i in dp[n]:
-        if i != -1 and res > i:
+        if i >= 0 and i < res:
             res = i
     print(res)
-    
