@@ -3,51 +3,43 @@ from collections import deque
 
 input = sys.stdin.readline
 
-dy = [-1, 0, 1, 0]
-dx = [0, 1, 0, -1]
+if __name__ == "__main__":
+    n, l, r = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(n)]
+    union = deque([[i,j] for i in range(n) for j in range(i%2,n,2)])
+    day = 0
+    dx = [1,-1,0,0]
+    dy = [0, 0,1,-1]
 
-def bfs(sy, sx):
-    population = lst[sy][sx]  # 시작 나라의 인구수
-    union = [(sy, sx)]  # 연합에 속한 나라의 좌표
-    visit[sy][sx] = True  # 방문 여부 표시
-    queue = deque([(sy, sx)])  # BFS를 위한 큐
-    while queue:
-        y, x = queue.popleft()
-        for d in range(4):
-            ny = y + dy[d]
-            nx = x + dx[d]
-            if ny < 0 or nx < 0 or ny >= N or nx >= N:
-                continue
-            if visit[ny][nx]:
-                continue
-            diff = abs(lst[y][x] - lst[ny][nx])
-            if diff < L or diff > R:
-                continue
-            visit[ny][nx] = True
-            population += lst[ny][nx]
-            union.append((ny, nx))
-            queue.append((ny, nx))
-    
-    if len(union) > 1:
-        avg = population // len(union)  # 연합의 평균 인구수
-        for y, x in union:
-            lst[y][x] = avg  # 연합의 인구수 갱신
-    return len(union) > 1
 
-N, L, R = map(int, input().split())
-lst = [list(map(int, input().split())) for _ in range(N)]
+    def bfs(i, j):
+        visited[i][j] = day #방문한 날짜
+        total = arr[i][j] #총 인구수 체크
+        stack = [[i,j]]
 
-day = 0  # 인구 이동이 발생하는 일수
-while True:
-    visit = [[False] * N for _ in range(N)]  # 방문 여부 초기화
-    moved = False  # 인구 이동이 발생했는지 여부
-    for y in range(N):
-        for x in range(N):
-            if not visit[y][x]:
-                if bfs(y, x):
-                    moved = True
-    if not moved:  # 인구 이동이 더 이상 발생하지 않으면 종료
-        break
-    day += 1
+        for x,y in stack:
+            for k in range(4):
+                xx = x + dx[k]
+                yy = y + dy[k]
+                if 0 <= xx < n and 0 <= yy < n and visited[xx][yy] != day:
+                    if abs(arr[x][y] - arr[xx][yy]) >= l and abs(arr[x][y] - arr[xx][yy]) <= r:
+                        visited[xx][yy] = day
+                        stack.append([xx, yy])
+                        total += arr[xx][yy]  # 연합 국가 인구수 총합
+        if len(stack) > 1:
+            for x, y in stack:
+                arr[x][y] = int(total // len(stack))  # 인구 이동 해주기
+                union.append([x,y])
 
-print(day)
+
+    visited = [[-1] * n for _ in range(n)]
+    # 국경선이 열릴 수 있는 지 체크
+    while union:
+
+        for _ in range(len(union)):
+            sx, sy = union.popleft()
+            if visited[sx][sy] < day:
+                bfs(sx,sy)
+        day += 1  # 날짜 하루 추가
+
+    print(day-1)
