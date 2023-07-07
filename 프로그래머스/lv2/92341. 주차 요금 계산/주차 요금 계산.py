@@ -6,7 +6,7 @@ def solution(fee, records):
     sort_records.sort(key=lambda x: (x[1], x[0])) # 차랑변호, 날짜순으로 정렬
 
 
-    start_time, car = sort_records[0][0], sort_records[0][1] # 탐색할 첫번째 차의 입차 시간과, 차량 번호
+    start_time = sort_records[0][0] # 탐색할 첫번째 차의 입차 시간
     end_time = ""
     total_time = 0
 
@@ -23,7 +23,7 @@ def solution(fee, records):
 
     #1번부터 탐색 시작
     for idx in range(1,len(sort_records)):
-        if car == sort_records[idx][1]: # 차량 번호가 같으면
+        if sort_records[idx-1][1] == sort_records[idx][1]: # 차량 번호가 같으면
             if sort_records[idx][2] == "OUT": # 출차한 경우, 종료 시간 체크하고 총 소요시간 계산
                 end_time = sort_records[idx][0]
                 total_time += ((int(end_time[:2]) - int(start_time[:2])) * 60) + (int(end_time[3:]) - int(start_time[3:]))
@@ -38,7 +38,6 @@ def solution(fee, records):
             start_time = sort_records[idx][0]
             end_time = ""
 
-        car = sort_records[idx][1] #현재 기준이 되는 차 변경
 
     cost(start_time, end_time, total_time) # 가장 마지막 차의 최종 출차 시간 체크 및 주차 비용 체크
 
