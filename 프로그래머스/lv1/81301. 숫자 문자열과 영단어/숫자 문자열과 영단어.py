@@ -8,8 +8,6 @@ def solution(s):
                 if s[idx:idx + 2] in number[j]:
                     answer += str(j)
                     idx += len(number[j])
-                    if idx > len(s):
-                        idx = len(s)
                     break
         else:
             answer += s[idx]
