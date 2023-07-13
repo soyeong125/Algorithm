@@ -16,7 +16,4 @@ if __name__ == "__main__":
                     break
             else:
                 break
-    if len(stack):
-        print(*stack, sep= '')
-    else:
-        print('FRULA')
+    print('FRULA' if len(stack) == 0 else ''.join(stack))
