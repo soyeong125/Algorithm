@@ -2,13 +2,13 @@ from collections import deque
 def bfs(p):
         dx = [1,-1,0,0]
         dy = [0,0,1,-1]
-
+        visited = [[0] * 5 for _ in range(5)]
         for i in range(5):
             for j in range(5):
                 if p[i][j] == 'P':
                     q = deque()
                     q.append([i,j,0])
-                    visited = [[0] * 5 for _ in range(5)]
+                    
                     visited[i][j] = 1
                     while q:
                         x,y,d = q.popleft()
