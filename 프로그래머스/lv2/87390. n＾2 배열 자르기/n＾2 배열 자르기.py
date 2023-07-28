@@ -4,10 +4,9 @@ def solution(n, left, right):
     for i in range(left,right+1):
         x = i//n
         y = i%n
-        if x > y :
-            answer.append(x+1)
-        else:
-            answer.append(y+1)
+        
+        answer.append(max(x,y)+1)
+
     return answer
 
  
