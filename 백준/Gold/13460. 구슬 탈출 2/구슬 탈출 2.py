@@ -27,10 +27,13 @@ if __name__ == "__main__":
     def move(x,y,k):
         tmp_cnt = 0
 
-        while arr[x+dx[k]][y+dy[k]] != '#' and arr[x][y] != 'O': #다음에 갈 수 있고 & 현재 구멍이 아니면 계속 이동
+        while arr[x+dx[k]][y+dy[k]] != '#': #다음에 갈 수 있고 & 현재 구멍이 아니면 계속 이동
             x += dx[k]
             y += dy[k]
             tmp_cnt +=1
+
+            if arr[x][y] == 'O':
+                break
 
         return [x,y,tmp_cnt]
 
