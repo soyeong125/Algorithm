@@ -1,13 +1,10 @@
 class Solution {
     public String solution(String my_string, String overwrite_string, int s) {
         String answer = "";
-        int ss =  my_string.length();
-        int ee = s + overwrite_string.length();
-        answer = 
-            my_string.substring(0,s) +
-            overwrite_string +
-            my_string.substring(ee,ss);
+        String start = my_string.substring(0,s);
+        String end = my_string.substring(s+overwrite_string.length());
         
+        answer = start + overwrite_string + end;
         
         return answer;
     }
