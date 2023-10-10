@@ -13,20 +13,13 @@ public class Main {
             //팀을 다 정했으니 능력치 계산
             int score1 = 0;
             int score2 = 0;
-            for(int i = 0 ; i < n ; i++){
-                if (visited[i]){
-                    for(int j = i+1; j < n; j++){
-                        if(visited[j] && i!=j){
-                            score1 += arr[i][j] + arr[j][i];
-                        }
+            for(int i = 0 ; i < n-1 ; i++){
+                for(int j = i+1; j< n;j++){
+                    if(visited[i] && visited[j]){
+                        score1 += arr[i][j] + arr[j][i];
                     }
-                }
-
-                if(!visited[i]){
-                    for(int j = i+1; j < n; j++){
-                        if(!visited[j] && i!=j){
-                            score2 += arr[i][j] + arr[j][i];
-                        }
+                    else if(!visited[i] && !visited[j]){
+                        score2 += arr[i][j] + arr[j][i];
                     }
                 }
             }
